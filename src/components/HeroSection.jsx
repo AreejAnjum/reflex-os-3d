@@ -78,13 +78,13 @@ export default function HeroSection({ onRunDemo, onInjectFailure, onReplayLearne
           <span style={{ color: '#f5f5f5' }}>Reflex</span>
           <span style={{ color: '#f59e0b' }}>OS</span>
           <span style={{ color: 'var(--text-secondary)', fontWeight: 400, fontSize: '0.7em', marginLeft: 12 }}>
-            A robot arm that learns from rare failures.
+            A robot arm that picks from the block's detected position.
           </span>
         </h1>
         <div style={{ fontSize: 12, color: 'var(--text-secondary)', letterSpacing: '0.06em' }}>
           {publicMode
-            ? 'The robot tries → fails → AI finds why → robot learns → next attempt is faster.'
-            : 'habit_plan → black_swan_detector → system2_recovery → memory.upsert → reflex_recall'
+            ? 'The robot looks → finds the block → moves there → picks → drops in the bin.'
+            : 'perception.look → locate_cube → move_to(actual_zone) → grip → drop'
           }
         </div>
       </div>

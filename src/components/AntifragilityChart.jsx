@@ -6,12 +6,14 @@ import useAppStore from '../store/useAppStore.js';
 
 const MODE_COLORS = {
   habit: '#2d8cf0',
+  perception: '#8b5cf6',
   system2: '#ff8c00',
   reflex: '#00d68f',
 };
 
 const MODE_LABELS = {
   habit: 'Habit',
+  perception: 'Perception',
   system2: 'AI Recovery',
   reflex: 'Reflex',
 };
@@ -90,8 +92,8 @@ export default function AntifragilityChart() {
       {data.length > 0 && (
         <div style={{ marginTop: 12, fontSize: 10, color: 'var(--text-muted)', textAlign: 'center' }}>
           {publicMode
-            ? 'Green bar = robot used its memory shortcut — much faster!'
-            : 'Reflex episodes (green) cost half compared to system2 recovery episodes (orange)'
+            ? 'Purple/green bars = robot goes directly to the block it sees.'
+            : 'Perception and reflex episodes should route directly to the detected cube zone.'
           }
         </div>
       )}

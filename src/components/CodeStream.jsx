@@ -55,6 +55,7 @@ export default function CodeStream() {
     'move_to(zone_A)': 'Moving to expected position A',
     'move_to(zone_A)  [habit]': 'Using remembered habit to move to A',
     'move_to(zone_B)': 'Redirecting to zone B',
+    'move_to(zone_B)  [perception]': 'Moving directly to the block at B',
     'move_to(zone_B)  [reflex direct]': 'Going straight to B — memory shortcut!',
     'grip(close)  ✓': 'Gripper closed successfully',
     'grip(close)  ✗  EMPTY GRIPPER': 'Failure! Gripper closed on nothing',
@@ -64,9 +65,10 @@ export default function CodeStream() {
     'black_swan_detected: empty_gripper': 'Unexpected failure detected',
     'system2_reasoning(active)': 'AI is thinking hard to find a solution',
     'recover: move_to(zone_B)': 'AI found it! Going to zone B instead',
-    'memory.upsert(signature="cube@B")': 'Saving this fix to long-term memory',
+    'memory.upsert(signature="cube@B")': 'Saving direct route to long-term memory',
+    'memory.upsert(signature="cube@B_direct")': 'Saving direct route to long-term memory',
     'reflex_recall(signature="cube@B")  ⚡': 'Memory found! Using shortcut instead of thinking',
-    'antifragility_demonstrated: cost 8→4 (-50%)': 'System is now 50% faster than before!',
+    'direct_route_confirmed: cube@B → bin': 'Confirmed: when block is at B, go to B first',
   };
 
   return (

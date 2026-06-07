@@ -7,24 +7,25 @@ export default function ComparisonPanel() {
   const first = metrics.first_attempt_cost;
   const second = metrics.second_attempt_cost;
   const improvement = first && second ? Math.round(((first - second) / first) * 100) : null;
+  const repeatLabel = improvement > 0 ? 'faster' : 'same route';
 
   return (
     <div className="panel" style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
       <div className="panel-header">
         <div className="panel-title-dot" style={{ background: 'var(--accent-green)' }} />
-        {publicMode ? 'BEFORE vs AFTER LEARNING' : 'FIRST TIME vs SECOND TIME'}
+        {publicMode ? 'PERCEPTION vs MEMORY' : 'DIRECT ROUTE vs REFLEX REPEAT'}
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: '1fr auto 1fr', gap: 8, alignItems: 'center' }}>
         {/* First attempt */}
         <AttemptCard
-          label={publicMode ? 'First Try' : 'ATTEMPT 1 — HABIT FAILED'}
-          subtitle={publicMode ? 'Robot did not know cube moved' : 'habit → failure → AI recovery'}
-          cost={first ?? 8}
+          label={publicMode ? 'First Direct Try' : 'ATTEMPT 1 — PERCEPTION'}
+          subtitle={publicMode ? 'Robot sees the cube at B' : 'look → move_to(B) → grip'}
+          cost={first ?? 4}
           costLabel="steps"
           mode="system2"
-          modeLabel={publicMode ? 'Slow recovery' : 'SYSTEM 2 RECOVERY'}
-          color="var(--accent-orange)"
+          modeLabel={publicMode ? 'Direct pickup' : 'PERCEPTION DIRECT'}
+          color="var(--accent-purple)"
           locked={!first}
         />
 
@@ -39,7 +40,7 @@ export default function ComparisonPanel() {
             }}>
               {improvement}%
               <div style={{ fontSize: 9, fontWeight: 400, color: 'var(--accent-green)', opacity: 0.8 }}>
-                faster
+                {repeatLabel}
               </div>
             </div>
           )}
@@ -48,7 +49,7 @@ export default function ComparisonPanel() {
         {/* Second attempt */}
         <AttemptCard
           label={publicMode ? 'Next Try' : 'ATTEMPT 2 — REFLEX'}
-          subtitle={publicMode ? 'Robot remembered and skipped wasted steps' : 'reflex recall → direct success'}
+          subtitle={publicMode ? 'Robot remembers the same direct route' : 'reflex recall → move_to(B)'}
           cost={second ?? 4}
           costLabel="steps"
           mode="reflex"
@@ -69,8 +70,8 @@ export default function ComparisonPanel() {
         }}>
           <div style={{ fontSize: 11, color: 'var(--accent-green)', fontWeight: 600 }}>
             {publicMode
-              ? `The robot saved ${first - second} steps by using its memory!`
-              : `Antifragility score: +${metrics.antifragility_score}% — cost reduced ${first} → ${second} steps`
+              ? `The robot keeps using the block's detected position instead of visiting A.`
+              : `Route confirmed: zone B → bin in ${second} steps`
             }
           </div>
         </div>
@@ -82,7 +83,7 @@ export default function ComparisonPanel() {
           textAlign: 'center',
           fontSize: 10, color: 'var(--text-muted)',
         }}>
-          Run the demo to see the improvement after learning
+          Run the demo to see direct routing to the detected block
         </div>
       )}
     </div>
