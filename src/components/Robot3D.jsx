@@ -13,19 +13,21 @@ function lerp(a, b, t) {
 function RobotArm({ targetJoints, scene }) {
   const display = useRef({
     shoulder_pan: 0, shoulder_lift: 0, elbow_flex: 0,
-    wrist_flex: 0, wrist_roll: 0, gripper: 0,
+    wrist_flex: 0, wrist_roll: 0, tool_extension: 0, gripper: 0,
   });
 
   const shoulderPanRef = useRef();
   const shoulderLiftRef = useRef();
   const elbowFlexRef = useRef();
   const wristFlexRef = useRef();
+  const toolSlideRef = useRef();
+  const toolShaftRef = useRef();
   const wristRollRef = useRef();
   const fingerLRef = useRef();
   const fingerRRef = useRef();
 
   useFrame(() => {
-    const t = 0.07;
+    const t = 0.12;
     const d = display.current;
     const tgt = targetJoints;
     d.shoulder_pan = lerp(d.shoulder_pan, tgt.shoulder_pan, t);
@@ -33,6 +35,7 @@ function RobotArm({ targetJoints, scene }) {
     d.elbow_flex = lerp(d.elbow_flex, tgt.elbow_flex, t);
     d.wrist_flex = lerp(d.wrist_flex, tgt.wrist_flex, t);
     d.wrist_roll = lerp(d.wrist_roll, tgt.wrist_roll, t);
+    d.tool_extension = lerp(d.tool_extension, tgt.tool_extension || 0, t);
     d.gripper = lerp(d.gripper, tgt.gripper, t);
 
     if (shoulderPanRef.current) shoulderPanRef.current.rotation.y = d.shoulder_pan * DEG;
@@ -40,9 +43,15 @@ function RobotArm({ targetJoints, scene }) {
     if (elbowFlexRef.current) elbowFlexRef.current.rotation.x = d.elbow_flex * DEG;
     if (wristFlexRef.current) wristFlexRef.current.rotation.x = d.wrist_flex * DEG;
     if (wristRollRef.current) wristRollRef.current.rotation.z = d.wrist_roll * DEG;
+    if (toolSlideRef.current) toolSlideRef.current.position.y = d.tool_extension;
+    if (toolShaftRef.current) {
+      toolShaftRef.current.position.y = d.tool_extension / 2;
+      toolShaftRef.current.scale.y = Math.max(d.tool_extension / 0.035, 0.001);
+    }
 
-    // When holding, close fingers tightly around the cube; otherwise open fully
-    const targetSpread = scene.holding ? 0.028 : 0.025 + (d.gripper / 40) * 0.028;
+    // gripper: 0 = open, 40 = closed
+    const closeAmount = Math.min(Math.max(d.gripper / 40, 0), 1);
+    const targetSpread = scene.holding ? 0.028 : lerp(0.052, 0.026, closeAmount);
     if (fingerLRef.current) fingerLRef.current.position.x = -targetSpread;
     if (fingerRRef.current) fingerRRef.current.position.x = targetSpread;
   });
@@ -120,7 +129,14 @@ function RobotArm({ targetJoints, scene }) {
 
             {/* Wrist flex — positioned at end of extended forearm */}
             <group ref={wristFlexRef} position={[0, 0.52, 0]}>
+              {/* Telescoping wrist slide — makes the down/up grasp motion visible */}
+              <mesh ref={toolShaftRef} position={[0, 0, 0]}>
+                <boxGeometry args={[0.022, 0.035, 0.022]} />
+                <meshStandardMaterial color="#38d8f0" emissive="#00cfff" emissiveIntensity={0.65} {...metal} />
+              </mesh>
+
               {/* Wrist roll — rotates Z */}
+              <group ref={toolSlideRef}>
               <group ref={wristRollRef}>
                 {/* Wrist joint */}
                 <mesh>
@@ -159,6 +175,7 @@ function RobotArm({ targetJoints, scene }) {
                   </mesh>
                 )}
               </group>
+              </group>
             </group>
           </group>
         </group>
@@ -172,7 +189,7 @@ const ZONE_POS = {
   A: [-0.28, 0.115, 0.2],
   B: [0.28, 0.115, 0.2],
   C: [0.45, 0.115, 0.05],
-  BIN: [0.38, 0.115, -0.2],
+  BIN: [0.38, 0.14, -0.2],
 };
 
 function SceneObjects({ scene }) {
@@ -340,8 +357,8 @@ export default function Robot3D() {
         />
         <StatusChip
           label="GRIP"
-          value={scene.holding ? 'HOLDING' : 'OPEN'}
-          color={scene.holding ? 'var(--accent-green)' : 'var(--text-muted)'}
+          value={scene.holding ? 'HOLDING' : joints.gripper > 20 ? 'CLOSED' : 'OPEN'}
+          color={scene.holding ? 'var(--accent-green)' : joints.gripper > 20 ? 'var(--accent-yellow)' : 'var(--text-muted)'}
           pulse={scene.holding}
         />
       </div>

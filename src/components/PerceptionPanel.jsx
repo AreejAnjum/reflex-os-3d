@@ -9,6 +9,7 @@ const ZONE_COLORS = {
 
 export default function PerceptionPanel() {
   const scene = useAppStore(s => s.scene);
+  const joints = useAppStore(s => s.joints);
   const connectionMode = useAppStore(s => s.connectionMode);
 
   const isLive = connectionMode === 'live';
@@ -66,7 +67,11 @@ export default function PerceptionPanel() {
       {/* State rows */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
         {[
-          { label: 'GRIPPER', value: scene.holding ? 'HOLDING' : 'OPEN', color: scene.holding ? 'var(--accent-green)' : 'var(--text-muted)' },
+          {
+            label: 'GRIPPER',
+            value: scene.holding ? 'HOLDING' : joints.gripper > 20 ? 'CLOSED' : 'OPEN',
+            color: scene.holding ? 'var(--accent-green)' : joints.gripper > 20 ? 'var(--accent-yellow)' : 'var(--text-muted)',
+          },
           { label: 'CUBE IN BIN', value: scene.cube_in_bin ? 'YES ✓' : 'NO', color: scene.cube_in_bin ? 'var(--accent-green)' : 'var(--text-muted)' },
           { label: 'ACTIVE ZONE', value: scene.cube_in_bin ? 'BIN' : scene.cube_zone, color: ZONE_COLORS[scene.cube_in_bin ? 'BIN' : scene.cube_zone] },
         ].map(({ label, value, color }) => (
