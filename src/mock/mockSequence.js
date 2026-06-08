@@ -42,12 +42,12 @@ export const INITIAL_REASONING_STEPS = [
 const POSES = {
   LOOK: { shoulder_pan: 5, shoulder_lift: -10, elbow_flex: 15, wrist_flex: 0, wrist_roll: 0, tool_extension: 0 },
   HOME: { shoulder_pan: 0, shoulder_lift: 0, elbow_flex: 0, wrist_flex: 0, wrist_roll: 0, tool_extension: 0 },
-  ZONE_A_HIGH: { shoulder_pan: -54.5, shoulder_lift: -22, elbow_flex: 134, wrist_flex: 1, wrist_roll: 0, tool_extension: 0 },
-  ZONE_A_LOW: { shoulder_pan: -54.5, shoulder_lift: 26, elbow_flex: 148, wrist_flex: 1, wrist_roll: 0, tool_extension: 0.035 },
-  ZONE_B_HIGH: { shoulder_pan: 54.5, shoulder_lift: -22, elbow_flex: 134, wrist_flex: 1, wrist_roll: 0, tool_extension: 0 },
-  ZONE_B_LOW: { shoulder_pan: 54.5, shoulder_lift: 26, elbow_flex: 148, wrist_flex: 1, wrist_roll: 0, tool_extension: 0.035 },
-  BIN_HIGH: { shoulder_pan: 117.8, shoulder_lift: -12, elbow_flex: 128, wrist_flex: -2, wrist_roll: 0, tool_extension: 0 },
-  BIN_LOW: { shoulder_pan: 117.8, shoulder_lift: 25, elbow_flex: 140, wrist_flex: 1, wrist_roll: 0, tool_extension: 0.035 },
+  ZONE_A_HIGH: { shoulder_pan: -54.5, shoulder_lift: -15, elbow_flex: 137, wrist_flex: 2, wrist_roll: 0, tool_extension: 0 },
+  ZONE_A_LOW: { shoulder_pan: -54.5, shoulder_lift: 25, elbow_flex: 146, wrist_flex: 1, wrist_roll: 0, tool_extension: 0.035 },
+  ZONE_B_HIGH: { shoulder_pan: 54.5, shoulder_lift: -15, elbow_flex: 137, wrist_flex: 2, wrist_roll: 0, tool_extension: 0 },
+  ZONE_B_LOW: { shoulder_pan: 54.5, shoulder_lift: 25, elbow_flex: 146, wrist_flex: 1, wrist_roll: 0, tool_extension: 0.035 },
+  BIN_HIGH: { shoulder_pan: 117.8, shoulder_lift: -4, elbow_flex: 131, wrist_flex: -1, wrist_roll: 0, tool_extension: 0 },
+  BIN_LOW: { shoulder_pan: 117.8, shoulder_lift: 24, elbow_flex: 138, wrist_flex: 1, wrist_roll: 0, tool_extension: 0.035 },
 };
 
 // Full mock story: Episode 1 (zone A) → Episode 2 (zone B direct) → Episode 3 (reflex repeat)

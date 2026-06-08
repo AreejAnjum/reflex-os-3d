@@ -94,41 +94,41 @@ function RobotArm({ targetJoints, scene }) {
 
         {/* Shoulder lift — rotates X */}
         <group ref={shoulderLiftRef} position={[0, 0.095, 0]}>
-          {/* Upper arm — section height 0.62 */}
-          <mesh position={[0, 0.31, 0]}>
-            <boxGeometry args={[0.068, 0.62, 0.068]} />
+          {/* Upper arm — section height 0.57 */}
+          <mesh position={[0, 0.285, 0]}>
+            <boxGeometry args={[0.068, 0.57, 0.068]} />
             <meshStandardMaterial {...link} />
           </mesh>
           {/* Upper arm accent stripe */}
-          <mesh position={[0.036, 0.31, 0]}>
-            <boxGeometry args={[0.006, 0.61, 0.06]} />
+          <mesh position={[0.036, 0.285, 0]}>
+            <boxGeometry args={[0.006, 0.56, 0.06]} />
             <meshStandardMaterial color="#00e8ff" emissive="#00e8ff" emissiveIntensity={0.9} />
           </mesh>
           {/* Second stripe opposite side */}
-          <mesh position={[-0.036, 0.31, 0]}>
-            <boxGeometry args={[0.004, 0.61, 0.06]} />
+          <mesh position={[-0.036, 0.285, 0]}>
+            <boxGeometry args={[0.004, 0.56, 0.06]} />
             <meshStandardMaterial color="#00b4e0" emissive="#00b4e0" emissiveIntensity={0.5} />
           </mesh>
 
           {/* Elbow joint — positioned at end of extended upper arm */}
-          <group ref={elbowFlexRef} position={[0, 0.64, 0]}>
+          <group ref={elbowFlexRef} position={[0, 0.59, 0]}>
             <mesh>
               <sphereGeometry args={[0.054, 24, 24]} />
               <meshStandardMaterial {...joint} />
             </mesh>
 
-            {/* Forearm — section height 0.50 */}
-            <mesh position={[0, 0.255, 0]}>
-              <boxGeometry args={[0.056, 0.50, 0.056]} />
+            {/* Forearm — section height 0.46 */}
+            <mesh position={[0, 0.235, 0]}>
+              <boxGeometry args={[0.056, 0.46, 0.056]} />
               <meshStandardMaterial {...link} />
             </mesh>
-            <mesh position={[0.03, 0.255, 0]}>
-              <boxGeometry args={[0.005, 0.49, 0.049]} />
+            <mesh position={[0.03, 0.235, 0]}>
+              <boxGeometry args={[0.005, 0.45, 0.049]} />
               <meshStandardMaterial color="#00e8ff" emissive="#00e8ff" emissiveIntensity={0.9} />
             </mesh>
 
             {/* Wrist flex — positioned at end of extended forearm */}
-            <group ref={wristFlexRef} position={[0, 0.52, 0]}>
+            <group ref={wristFlexRef} position={[0, 0.48, 0]}>
               {/* Telescoping wrist slide — makes the down/up grasp motion visible */}
               <mesh ref={toolShaftRef} position={[0, 0, 0]}>
                 <boxGeometry args={[0.022, 0.035, 0.022]} />
